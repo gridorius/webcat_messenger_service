@@ -17,11 +17,9 @@ couriers
 LEFT JOIN travel_shedule ON travel_shedule.courier_id = couriers.id
 WHERE
 (
-    (
     departure_date BETWEEN :from AND :to
 	OR
 	arrival_date BETWEEN :from AND :to
-    )
     OR
     (
         departure_date <= :from
@@ -33,6 +31,12 @@ WHERE
         :from <= departure_date
         AND
         :to >= arrival_date
+    )
+    OR
+    (
+        :from = departure_date
+        AND
+        :to = arrival_date
     )
 )
 AND
@@ -65,9 +69,11 @@ LEFT JOIN regions ON regions.id = :region_id
 WHERE
     NOT EXISTS(".preg_replace('/:to/', 'ADDDATE(CAST(:from AS DATE), regions.travel_time)', $busy_couriers_query).")
     AND 
-    couriers_main.id = :courier_id";
+    couriers_main.id = :courier_id
+LIMIT 0, 1";
 
-$couriers = $pdo->prepare("$couriers_query WHERE NOT EXISTS($busy_couriers_query)");
+$get_couriers = $pdo->prepare($couriers_query);
+$busy_couriers = $pdo->prepare("$couriers_query WHERE NOT EXISTS($busy_couriers_query)");
 $get_days = $pdo->prepare($get_days_query);
 $get_regions = $pdo->prepare($get_regions_query);
 $add_travel_shedule = $pdo->prepare($add_travel_shedule_query);

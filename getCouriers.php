@@ -10,7 +10,7 @@ $days = $get_days->fetch(PDO::FETCH_OBJ)->travel_time;
 $from_format = $date->format('Y-m-d');
 $to_format = $date->add(new DateInterval("P{$days}D"))->format('Y-m-d');
 
-$couriers->execute(['from' => $from_format, 'to' => $to_format]);
+$busy_couriers->execute(['from' => $from_format, 'to' => $to_format]);
 
 echo json_encode($couriers->fetchAll(PDO::FETCH_OBJ));
 ?>
