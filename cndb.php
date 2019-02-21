@@ -72,9 +72,19 @@ WHERE
     couriers_main.id = :courier_id
 LIMIT 0, 1";
 
+$all_travels_query = 
+"SELECT 
+name,
+departure_date,
+arrival_date
+FROM
+travel_shedule
+INNER JOIN couriers ON travel_shedule.courier_id = couriers.id";
+
 $get_couriers = $pdo->prepare($couriers_query);
 $busy_couriers = $pdo->prepare("$couriers_query WHERE NOT EXISTS($busy_couriers_query)");
 $get_days = $pdo->prepare($get_days_query);
 $get_regions = $pdo->prepare($get_regions_query);
 $add_travel_shedule = $pdo->prepare($add_travel_shedule_query);
+$all_travels = $pdo->prepare($all_travels_query);
 ?>
