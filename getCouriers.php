@@ -12,5 +12,5 @@ $to_format = $date->add(new DateInterval("P{$days}D"))->format('Y-m-d');
 
 $busy_couriers->execute(['from' => $from_format, 'to' => $to_format]);
 
-echo json_encode($couriers->fetchAll(PDO::FETCH_OBJ));
+echo json_encode($busy_couriers->fetchAll(PDO::FETCH_OBJ));
 ?>

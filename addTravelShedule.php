@@ -7,7 +7,7 @@ $date = $_POST['date'];
 $courier_id = $_POST['courier'];
 
 if(!empty($region_id) && !empty($date)  && !empty($courier_id)){
-    addTravelShedule($region_id, $date, $courier)
+    addTravelShedule($region_id, $date, $courier_id);
 }
 
 header('location: /form.php');
