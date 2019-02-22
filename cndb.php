@@ -72,6 +72,16 @@ WHERE
     couriers_main.id = :courier_id
 LIMIT 0, 1";
 
+$get_travels_query = 
+"SELECT 
+        departure_date,
+        arrival_date
+FROM couriers
+INNER JOIN travel_shedule ON travel_shedule.courier_id = couriers.id
+WHERE
+couriers.id = ?
+ORDER BY departure_date";
+
 $all_travels_query = 
 "SELECT 
 name,
@@ -87,4 +97,5 @@ $get_days = $pdo->prepare($get_days_query);
 $get_regions = $pdo->prepare($get_regions_query);
 $add_travel_shedule = $pdo->prepare($add_travel_shedule_query);
 $all_travels = $pdo->prepare($all_travels_query);
+$get_travels = $pdo->prepare($get_travels_query);
 ?>
